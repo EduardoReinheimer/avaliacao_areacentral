@@ -53,7 +53,7 @@ $produto->getById($id);
       <div class="header py-4">
         <div class="container">
           <div class="d-flex">
-            <a class="header-brand" href="./index.html">
+            <a class="header-brand" href="./index.php">
               <img src="./demo/brand/tabler.svg" class="header-brand-img" alt="tabler logo">
             </a>
             <div class="d-flex order-lg-2 ml-auto">
@@ -90,7 +90,7 @@ $produto->getById($id);
                   <a href="./index.html" class="nav-link"><i class="fe fe-home"></i> Home</a>
                 </li>
                 <li class="nav-item">
-                  <a href="./produtos.html" class="nav-link active"><i class="fe fe-package"></i> Produtos</a>
+                  <a href="./produtos.php" class="nav-link active"><i class="fe fe-package"></i> Produtos</a>
                 </li>
                 <li class="nav-item">
                   <a href="./form-venda.html" class="nav-link"><i class="fe fe-dollar-sign"></i> Venda</a>
@@ -107,26 +107,27 @@ $produto->getById($id);
         <div class="container">
           <div class="row">
             <div class="col-lg-12">
-              <form class="card">
+              <form class="card" method="post" action="produto\update.php">
                 <div class="card-body">
                   <h3 class="card-title">Editar produto - Batata</h3>
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group">
                         <label class="form-label">Descrição</label>
-                        <input type="text" class="form-control" name="example-text-input" placeholder="Arroz.." value="<?php echo $produto->getDescricao()?>">
+                        <input type="hidden" class="form-control" name="id" value="<?php echo $produto->getId()?>">
+                        <input type="text" class="form-control" name="descricao"placeholder="Arroz.." value="<?php echo $produto->getDescricao()?>">
                       </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                       <div class="form-group">
                         <label class="form-label">Estoque</label>
-                        <input type="number" class="form-control" placeholder="10.." value="<?php echo $produto->getQuantidadeEstoque()?>">
+                        <input type="number" class="form-control" placeholder="10.." name="qtdestoque" value="<?php echo $produto->getQuantidadeEstoque()?>">
                       </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                       <div class="form-group">
                         <label class="form-label">Código de barras</label>
-                        <input type="number" class="form-control" value="<?php echo $produto->getCodigoBarras()?>">
+                        <input type="number" class="form-control" name="codbarras" value="<?php echo $produto->getCodigoBarras()?>">
                       </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
@@ -136,7 +137,7 @@ $produto->getById($id);
                           <span class="input-group-prepend">
                             <span class="input-group-text">R$</span>
                           </span>
-                          <input type="text" class="form-control text-right" aria-label="Valor" value="<?php echo $produto->getValorUnitario()?>">
+                          <input type="text" name="vlrunt" class="form-control text-right" aria-label="Valor" value="<?php echo $produto->getValorUnitario()?>">
                         </div>
                       </div>
                     </div>
@@ -144,7 +145,7 @@ $produto->getById($id);
                 </div>
                 <div class="card-footer text-left" style="display: flex; justify-content: space-between">
                   <div>
-                    <a href="./produtos.html" class="btn btn-secondary">Voltar para produtos</a>
+                    <a href="./produtos.php" class="btn btn-secondary">Voltar para produtos</a>
                   </div>
                   <div>
                     <button type="submit" class="btn btn-primary">Confirmar alteração</button>

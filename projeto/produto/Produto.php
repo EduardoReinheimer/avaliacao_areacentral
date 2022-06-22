@@ -35,7 +35,7 @@ class Produto
         return $this->desc;
     }
 
-    private function setDescricao($desc)
+    public function setDescricao($desc)
     {
         $this->desc = $desc;
     }
@@ -45,7 +45,7 @@ class Produto
         return $this->vlrunt;
     }
 
-    private function setValorUnitario($vlrunt)
+    public function setValorUnitario($vlrunt)
     {
         $this->vlrunt = $vlrunt;
     }
