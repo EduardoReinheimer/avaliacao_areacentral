@@ -1,10 +1,7 @@
 <?php
-require_once 'produto/Produto.php';
-$descricao = isset($_GET['descricao']) ? $_GET['descricao'] : '';
-$vlrunt = isset($_GET['vlrunt']) ? $_GET['vlrunt'] : '';
-$codbarras = isset($_GET['codbarras']) ? $_GET['codbarras'] : '';
-$qtdestoque = isset($_GET['qtdestoque']) ? $_GET['qtdestoque'] : '';
 
+require_once 'produto/Produto.php';
+$id = isset($_GET['id']) ? $_GET['id']: '';
 
 ?>
 <!doctype html>
@@ -107,26 +104,26 @@ $qtdestoque = isset($_GET['qtdestoque']) ? $_GET['qtdestoque'] : '';
         <div class="container">
           <div class="row">
             <div class="col-lg-12">
-              <form class="card" method="post" action="produto\insere.php">
+              <form class="card">
                 <div class="card-body">
-                  <h3 class="card-title">Novo produto</h3>
+                  <h3 class="card-title">Editar produto - Batata</h3>
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group">
                         <label class="form-label">Descrição</label>
-                        <input type="text" class="form-control" name="descricao" placeholder="Arroz..">
+                        <input type="text" class="form-control" name="example-text-input" placeholder="Arroz.." value="Batata">
                       </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                       <div class="form-group">
                         <label class="form-label">Estoque</label>
-                        <input type="number" class="form-control" name="qtdestoque" placeholder="10..">
+                        <input type="number" class="form-control" placeholder="10.." value="2000">
                       </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                       <div class="form-group">
                         <label class="form-label">Código de barras</label>
-                        <input type="number" class="form-control" name="codbarras" placeholder="78978978978978">
+                        <input type="number" class="form-control" placeholder="78978978978978">
                       </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
@@ -136,7 +133,7 @@ $qtdestoque = isset($_GET['qtdestoque']) ? $_GET['qtdestoque'] : '';
                           <span class="input-group-prepend">
                             <span class="input-group-text">R$</span>
                           </span>
-                          <input type="text" class="form-control text-right" name="vlrunt" aria-label="Valor">
+                          <input type="text" class="form-control text-right" aria-label="Valor" value="1,50">
                         </div>
                       </div>
                     </div>
@@ -144,10 +141,10 @@ $qtdestoque = isset($_GET['qtdestoque']) ? $_GET['qtdestoque'] : '';
                 </div>
                 <div class="card-footer text-left" style="display: flex; justify-content: space-between">
                   <div>
-                    <a href="./produtos.html" class="btn btn-secondary">Voltar para prod</a>
+                    <a href="./produtos.html" class="btn btn-secondary">Voltar para produtos</a>
                   </div>
                   <div>
-                    <button type="submit" class="btn btn-primary">Confirmar</button>
+                    <button type="submit" class="btn btn-primary">Confirmar alteração</button>
                   </div>
                 </div>
               </form>

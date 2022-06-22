@@ -104,7 +104,27 @@ class Produto
         return $retorno;
     }
 
-    public function insert(){
-        
+    public function getById($id){
+        $conn = new Conexao();
+        $conn->setConexao();
+
+        $conn->query("SELECT * FROM produto WHERE pro_id = $this->getId()");
+
+        $retorno = [];
+
+        if ($conn->getQuery()) {
+            foreach ($conn->getArrayResults() as $linha) {
+                $produto = new Produto();
+                $produto->setId($linha['pro_id']);
+                $produto->setDescricao($linha['pro_desc']);
+                $produto->setValorUnitario($linha['pro_vlrunt']);
+                $produto->setQuantidadeEstoque($linha['pro_qtdestoque']);
+                $produto->setCodigoBarras($linha['pro_codbarras']);
+                $produto->setProdutoAtivo($linha['pro_ativo']);
+                $retorno[] = $produto;
+            }
+        }
+        $conn->closeConexao();
+        return $retorno;
     }
 }

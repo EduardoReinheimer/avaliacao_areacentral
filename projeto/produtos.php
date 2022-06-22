@@ -50,7 +50,7 @@ $produtos = isset($list_produtos) ? $list_produtos : [];
       <div class="header py-4">
         <div class="container">
           <div class="d-flex">
-            <a class="header-brand" href="./index.html">
+            <a class="header-brand" href="./index.php">
               <img src="./demo/brand/tabler.svg" class="header-brand-img" alt="tabler logo">
             </a>
             <div class="d-flex order-lg-2 ml-auto">
@@ -84,10 +84,10 @@ $produtos = isset($list_produtos) ? $list_produtos : [];
             <div class="col-lg order-lg-first">
               <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
                 <li class="nav-item">
-                  <a href="./index.html" class="nav-link"><i class="fe fe-home"></i> Home</a>
+                  <a href="./index.php" class="nav-link"><i class="fe fe-home"></i> Home</a>
                 </li>
                 <li class="nav-item">
-                  <a href="./produtos.html" class="nav-link active"><i class="fe fe-package"></i> Produtos</a>
+                  <a href="./produtos.php" class="nav-link active"><i class="fe fe-package"></i> Produtos</a>
                 </li>
                 <li class="nav-item">
                   <a href="./form-venda.html" class="nav-link"><i class="fe fe-dollar-sign"></i> Venda</a>
@@ -130,7 +130,7 @@ $produtos = isset($list_produtos) ? $list_produtos : [];
                         <?php
                         $index = 0;
                         foreach ($produtos as $produto) {
-                          echo '<td><span class="text-muted">' . ++$index . '</span></td>
+                          echo '<td><span class="text-muted">' . $produto->getId() . '</span></td>
                               <td>
                                 ' . $produto->getDescricao() . '
                               </td>
@@ -147,7 +147,7 @@ $produtos = isset($list_produtos) ? $list_produtos : [];
                                 ' . "total vendas" . '
                               </td>                         
                               <td>
-                                <a class="icon" href="./form-produto-edit.html">
+                                <a class="icon" href="./form-produto-edit.php?id='.$produto->getId().'">
                                   <i class="fe fe-edit"></i>
                                 </a>			    
                               </td>

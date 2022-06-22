@@ -1,5 +1,5 @@
 <?php 
-require_once '../projeto/models/Produto.php';
+require_once '../projeto/produto/Produto.php';
 function listAllProdutos(){
 
     $produtos = [];
