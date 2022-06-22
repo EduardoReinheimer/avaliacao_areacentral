@@ -1,11 +1,8 @@
 <?php
-require_once 'produto/Produto.php';
-$descricao = isset($_GET['descricao']) ? $_GET['descricao'] : '';
-$vlrunt = isset($_GET['vlrunt']) ? $_GET['vlrunt'] : '';
-$codbarras = isset($_GET['codbarras']) ? $_GET['codbarras'] : '';
-$qtdestoque = isset($_GET['qtdestoque']) ? $_GET['qtdestoque'] : '';
+require_once '../projeto/produto/listaTodos.php';
 
-
+$list_produtos = listAllProdutos();
+$produtos = isset($list_produtos) ? $list_produtos : [];
 ?>
 <!doctype html>
 <html lang="en" dir="ltr">
@@ -25,7 +22,7 @@ $qtdestoque = isset($_GET['qtdestoque']) ? $_GET['qtdestoque'] : '';
   <link rel="icon" href="./favicon.ico" type="image/x-icon" />
   <link rel="shortcut icon" type="image/x-icon" href="./favicon.ico" />
   <!-- Generated: 2018-04-16 09:29:05 +0200 -->
-  <title>Novo produto</title>
+  <title>Venda</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
   <script src="./assets/js/require.min.js"></script>
@@ -53,7 +50,7 @@ $qtdestoque = isset($_GET['qtdestoque']) ? $_GET['qtdestoque'] : '';
       <div class="header py-4">
         <div class="container">
           <div class="d-flex">
-            <a class="header-brand" href="./index.php">
+            <a class="header-brand" href="./index.html">
               <img src="./demo/brand/tabler.svg" class="header-brand-img" alt="tabler logo">
             </a>
             <div class="d-flex order-lg-2 ml-auto">
@@ -87,13 +84,13 @@ $qtdestoque = isset($_GET['qtdestoque']) ? $_GET['qtdestoque'] : '';
             <div class="col-lg order-lg-first">
               <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
                 <li class="nav-item">
-                  <a href="./index.php" class="nav-link"><i class="fe fe-home"></i> Home</a>
+                  <a href="./index.html" class="nav-link"><i class="fe fe-home"></i> Home</a>
                 </li>
                 <li class="nav-item">
-                  <a href="./produtos.php" class="nav-link active"><i class="fe fe-package"></i> Produtos</a>
+                  <a href="./produtos.html" class="nav-link"><i class="fe fe-package"></i> Produtos</a>
                 </li>
                 <li class="nav-item">
-                  <a href="./form-venda.html" class="nav-link"><i class="fe fe-dollar-sign"></i> Venda</a>
+                  <a href="./form-produto.html" class="nav-link active"><i class="fe fe-dollar-sign"></i> Venda</a>
                 </li>
                 <li class="nav-item">
                   <a href="./produtos-excluidos.html" class="nav-link"><i class="fe fe-trash"></i> Lixeira</a>
@@ -107,26 +104,26 @@ $qtdestoque = isset($_GET['qtdestoque']) ? $_GET['qtdestoque'] : '';
         <div class="container">
           <div class="row">
             <div class="col-lg-12">
-              <form class="card" method="post" action="produto\insere.php">
+              <form class="card" method="post" action="">
                 <div class="card-body">
-                  <h3 class="card-title">Novo produto</h3>
+                  <h3 class="card-title">Realizar venda de um produto</h3>
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group">
-                        <label class="form-label">Descrição</label>
-                        <input type="text" class="form-control" name="descricao" placeholder="Arroz..">
+                        <label class="form-label">Produto</label>
+                        <select class="form-control custom-select">
+                          <?php
+                          foreach ($produtos as $produto) {
+                            echo '<option value="'. $produto->getId().'">' . $produto->getDescricao() . '</option>';
+                          }
+                          ?>
+                        </select>
                       </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                       <div class="form-group">
-                        <label class="form-label">Estoque</label>
-                        <input type="number" class="form-control" name="qtdestoque" placeholder="10..">
-                      </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4">
-                      <div class="form-group">
-                        <label class="form-label">Código de barras</label>
-                        <input type="number" class="form-control" name="codbarras" placeholder="78978978978978">
+                        <label class="form-label">Quantidade</label>
+                        <input type="number" class="form-control" placeholder="Digite aqui a quantidade">
                       </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
@@ -136,7 +133,29 @@ $qtdestoque = isset($_GET['qtdestoque']) ? $_GET['qtdestoque'] : '';
                           <span class="input-group-prepend">
                             <span class="input-group-text">R$</span>
                           </span>
-                          <input type="text" class="form-control text-right" name="vlrunt" aria-label="Valor">
+                          <input type="text" class="form-control text-right" aria-label="Valor">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                      <div class="form-group">
+                        <label class="form-label">Valor total</label>
+                        <div class="input-group">
+                          <span class="input-group-prepend">
+                            <span class="input-group-text">R$</span>
+                          </span>
+                          <input type="text" class="form-control text-right" aria-label="Valor" disabled="disabled" title="Este campo não pode ser alterado">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6 col-md-12">
+                      <div class="form-group">
+                        <div class="form-label">&nbsp;</div>
+                        <div class="custom-controls-stacked">
+                          <label class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" name="example-checkbox1" value="option1" checked>
+                            <span class="custom-control-label">Atualizar valor unitário do produto</span>
+                          </label>
                         </div>
                       </div>
                     </div>
@@ -144,13 +163,67 @@ $qtdestoque = isset($_GET['qtdestoque']) ? $_GET['qtdestoque'] : '';
                 </div>
                 <div class="card-footer text-left" style="display: flex; justify-content: space-between">
                   <div>
-                    <a href="./produtos.php" class="btn btn-secondary">Voltar para prod</a>
+                    <a href="./produtos.html" class="btn btn-secondary">Voltar para produtos</a>
                   </div>
                   <div>
                     <button type="submit" class="btn btn-primary">Confirmar</button>
                   </div>
                 </div>
               </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="my-3 my-md-5">
+        <div class="container">
+          <div class="row row-cards row-deck">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Últimas vendas realizadas</h3>
+                </div>
+                <div class="table-responsive">
+                  <table class="table card-table table-vcenter text-nowrap">
+                    <thead>
+                      <tr>
+                        <th class="w-1">#</th>
+                        <th>Produto</th>
+                        <th>Quantidade</th>
+                        <th>Valor unitário</th>
+                        <th>Valor total da venda</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><span class="text-muted">2</span></td>
+                        <td>Batata</td>
+                        <td>
+                          2
+                        </td>
+                        <td>
+                          R$ 1,50
+                        </td>
+                        <td>
+                          R$ 3,00
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><span class="text-muted">1</span></td>
+                        <td>Batata</td>
+                        <td>
+                          10
+                        </td>
+                        <td>
+                          R$ 1,50
+                        </td>
+                        <td>
+                          R$ 15,00
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
           </div>
         </div>

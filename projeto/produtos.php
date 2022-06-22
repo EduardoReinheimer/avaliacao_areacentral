@@ -90,7 +90,7 @@ $produtos = isset($list_produtos) ? $list_produtos : [];
                   <a href="./produtos.php" class="nav-link active"><i class="fe fe-package"></i> Produtos</a>
                 </li>
                 <li class="nav-item">
-                  <a href="./form-venda.html" class="nav-link"><i class="fe fe-dollar-sign"></i> Venda</a>
+                  <a href="./form-venda.php" class="nav-link"><i class="fe fe-dollar-sign"></i> Venda</a>
                 </li>
                 <li class="nav-item">
                   <a href="./produtos-excluidos.html" class="nav-link"><i class="fe fe-trash"></i> Lixeira</a>
@@ -147,12 +147,12 @@ $produtos = isset($list_produtos) ? $list_produtos : [];
                                 ' . "total vendas" . '
                               </td>                         
                               <td>
-                                <a class="icon" href="./form-produto-edit.php?id='.$produto->getId().'">
+                                <a class="icon" href="./form-produto-edit.php?id=' . $produto->getId() . '">
                                   <i class="fe fe-edit"></i>
                                 </a>			    
                               </td>
                               <td>
-                                <a class="icon" href="javascript:void(0)">
+                                <a class="icon" href="./produto/delete.php?id=' . $produto->getId() . '">
                                   <i class="fe fe-trash"></i>
                                 </a>			    
                               </td>

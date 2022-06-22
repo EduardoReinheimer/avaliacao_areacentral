@@ -1,5 +1,6 @@
 <?php 
 require_once '../projeto/produto/Produto.php';
+
 function listAllProdutos(){
 
     $produtos = [];
