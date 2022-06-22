@@ -10,7 +10,8 @@ class Produto
     private $codbarras;
     private $ativo;
 
-    function __construct($id = null, $desc = null, $vlrunt = null, $qtdestoque = null, $codbarras = null, $ativo = 'S'){
+    function __construct($id = null, $desc = null, $vlrunt = null, $qtdestoque = null, $codbarras = null, $ativo = 'S')
+    {
         $this->id = $this->setId($id);
         $this->desc = $this->setDescricao($desc);
         $this->vlrunt = $this->setValorUnitario($vlrunt);
@@ -79,12 +80,22 @@ class Produto
         $this->ativo = $ativo == 'S' ? 'S' : 'N';
     }
 
+    /***
+     * Retorna uma lista com todas as ocorrências
+     */
     public function listAll()
     {
         $conn = new Conexao();
         $conn->setConexao();
 
-        $conn->query("SELECT * FROM produto");
+        $conn->query("SELECT 
+                    p.pro_id,
+                    p.pro_desc,
+                    p.pro_vlrunt,
+                    p.pro_qtdestoque,
+                    p.pro_codbarras,
+                    p.pro_ativo
+        FROM produto p WHERE p.pro_ativo = 'S'");
 
         $retorno = [];
 
@@ -104,27 +115,33 @@ class Produto
         return $retorno;
     }
 
-    public function getById($id){
+    /***
+     * Ao passar ID para objeto, popula os demais campos com informações do banco de dados
+     */
+    public function getById($id)
+    {
         $conn = new Conexao();
         $conn->setConexao();
 
-        $conn->query("SELECT * FROM produto WHERE pro_id = $this->getId()");
+        $conn->query("SELECT 
+                    p.pro_id,
+                    p.pro_desc,
+                    p.pro_vlrunt,
+                    p.pro_qtdestoque,
+                    p.pro_codbarras,
+                    p.pro_ativo
+        FROM produto p WHERE p.pro_id = $id");
 
-        $retorno = [];
 
         if ($conn->getQuery()) {
-            foreach ($conn->getArrayResults() as $linha) {
-                $produto = new Produto();
-                $produto->setId($linha['pro_id']);
-                $produto->setDescricao($linha['pro_desc']);
-                $produto->setValorUnitario($linha['pro_vlrunt']);
-                $produto->setQuantidadeEstoque($linha['pro_qtdestoque']);
-                $produto->setCodigoBarras($linha['pro_codbarras']);
-                $produto->setProdutoAtivo($linha['pro_ativo']);
-                $retorno[] = $produto;
-            }
+            $linha = $conn->getArrayResults();
+            $this->setId($linha[0]['pro_id']);
+            $this->setDescricao($linha[0]['pro_desc']);
+            $this->setValorUnitario($linha[0]['pro_vlrunt']);
+            $this->setQuantidadeEstoque($linha[0]['pro_qtdestoque']);
+            $this->setCodigoBarras($linha[0]['pro_codbarras']);
+            $this->setProdutoAtivo($linha[0]['pro_ativo']);
         }
         $conn->closeConexao();
-        return $retorno;
     }
 }

@@ -2,6 +2,9 @@
 
 require_once 'produto/Produto.php';
 $id = isset($_GET['id']) ? $_GET['id']: '';
+$produto = new Produto();
+$produto->getById($id);
+
 
 ?>
 <!doctype html>
@@ -111,19 +114,19 @@ $id = isset($_GET['id']) ? $_GET['id']: '';
                     <div class="col-md-12">
                       <div class="form-group">
                         <label class="form-label">Descrição</label>
-                        <input type="text" class="form-control" name="example-text-input" placeholder="Arroz.." value="Batata">
+                        <input type="text" class="form-control" name="example-text-input" placeholder="Arroz.." value="<?php echo $produto->getDescricao()?>">
                       </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                       <div class="form-group">
                         <label class="form-label">Estoque</label>
-                        <input type="number" class="form-control" placeholder="10.." value="2000">
+                        <input type="number" class="form-control" placeholder="10.." value="<?php echo $produto->getQuantidadeEstoque()?>">
                       </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                       <div class="form-group">
                         <label class="form-label">Código de barras</label>
-                        <input type="number" class="form-control" placeholder="78978978978978">
+                        <input type="number" class="form-control" value="<?php echo $produto->getCodigoBarras()?>">
                       </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
@@ -133,7 +136,7 @@ $id = isset($_GET['id']) ? $_GET['id']: '';
                           <span class="input-group-prepend">
                             <span class="input-group-text">R$</span>
                           </span>
-                          <input type="text" class="form-control text-right" aria-label="Valor" value="1,50">
+                          <input type="text" class="form-control text-right" aria-label="Valor" value="<?php echo $produto->getValorUnitario()?>">
                         </div>
                       </div>
                     </div>
