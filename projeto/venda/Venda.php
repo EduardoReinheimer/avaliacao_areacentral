@@ -110,9 +110,9 @@ class Venda {
                     p.pro_vlrunt,
                     (v.ven_qtd * p.pro_vlrunt) as total
         FROM venda v
-        join produto p on 
+        left join produto p on 
             p.pro_id = v.pro_id
-        WHERE p.pro_ativo = 'S'");
+        group by v.ven_id");
 
         $retorno = [];
 
