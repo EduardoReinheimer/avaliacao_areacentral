@@ -141,10 +141,10 @@ $produtos = isset($list_produtos) ? $list_produtos : [];
                                 ' . $produto->getQuantidadeEstoque() . '
                               </td>
                               <td>
-                               ' . "data" . '
+                               ' . $produto->getDataVenda() . '
                               </td>
                               <td>
-                                ' . "total vendas" . '
+                                ' . $produto->getTotalVendas() . '
                               </td>                         
                               <td>
                                 <a class="icon" href="./form-produto-edit.php?id=' . $produto->getId() . '">

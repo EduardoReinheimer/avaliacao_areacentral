@@ -9,6 +9,8 @@ class Produto
     private $qtdestoque;
     private $codbarras;
     private $ativo;
+    private $data_venda;
+    private $total_vendas;
 
     function __construct($id = null, $desc = null, $vlrunt = null, $qtdestoque = null, $codbarras = null, $ativo = 'S')
     {
@@ -80,6 +82,22 @@ class Produto
         $this->ativo = $ativo == 'S' ? 'S' : 'N';
     }
 
+    public function getDataVenda(){
+        return isset($this->data_venda)? $this->data_venda: "Sem vendas";
+    }
+
+    private function setDataVenda($data_venda){
+        $this->data_venda = $data_venda;
+    }
+
+    public function getTotalVendas(){
+        return isset($this->total_vendas) ? $this->total_vendas : 0;
+    }
+
+    private function setTotalVendas($total_vendas){
+        $this->total_vendas = $total_vendas;
+    }
+
     /***
      * Retorna uma lista com todas as ocorrências ativas
      */
@@ -94,8 +112,14 @@ class Produto
                     p.pro_vlrunt,
                     p.pro_qtdestoque,
                     p.pro_codbarras,
-                    p.pro_ativo
-        FROM produto p WHERE p.pro_ativo = 'S'");
+                    p.pro_ativo,
+                    MAX(v.ven_data) as ultima_venda,
+                    SUM(v.ven_qtd) as total_vendas
+        FROM produto p
+        LEFT JOIN venda v on
+            p.pro_id = v.pro_id
+         WHERE p.pro_ativo = 'S'
+         GROUP BY p.pro_id");
 
         $retorno = [];
 
@@ -108,6 +132,8 @@ class Produto
                 $produto->setQuantidadeEstoque($linha['pro_qtdestoque']);
                 $produto->setCodigoBarras($linha['pro_codbarras']);
                 $produto->setProdutoAtivo($linha['pro_ativo']);
+                $produto->setDataVenda($linha['ultima_venda']);
+                $produto->setTotalVendas($linha['total_vendas']);
                 $retorno[] = $produto;
             }
         }
