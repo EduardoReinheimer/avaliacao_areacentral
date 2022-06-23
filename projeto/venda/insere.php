@@ -11,6 +11,7 @@ $conn = new Conexao();
 $conn->setConexao();
 
 $conn->query("INSERT INTO `venda`(`pro_id`, `ven_qtd`) VALUES ('$produto_id',$quantidade)");
+$conn->query("UPDATE `produto` SET `pro_qtdestoque`= `pro_qtdestoque` - $quantidade WHERE `pro_id`=$produto_id");
 if ($atualiza) {
     $conn->query("UPDATE `produto` SET `pro_vlrunt`=$vlrunt WHERE `pro_id`=$produto_id");
 }
