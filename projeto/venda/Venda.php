@@ -108,7 +108,6 @@ class Venda {
                     p.pro_desc,
                     v.ven_qtd,
                     p.pro_vlrunt,
-                    v.ven_data
                     (v.ven_qtd * p.pro_vlrunt) as total
         FROM venda v
         join produto p on 
