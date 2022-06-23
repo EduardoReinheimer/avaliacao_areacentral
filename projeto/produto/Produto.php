@@ -118,6 +118,7 @@ class Produto
         FROM produto p
         LEFT JOIN venda v on
             p.pro_id = v.pro_id
+            where p.pro_ativo = 'S'
          GROUP BY p.pro_id");
 
         $retorno = [];
