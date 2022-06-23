@@ -93,7 +93,7 @@ $produtos = isset($list_produtos) ? $list_produtos : [];
                   <a href="./form-venda.php" class="nav-link"><i class="fe fe-dollar-sign"></i> Venda</a>
                 </li>
                 <li class="nav-item">
-                  <a href="./produtos-excluidos.html" class="nav-link"><i class="fe fe-trash"></i> Lixeira</a>
+                  <a href="./produtos-excluidos.php" class="nav-link"><i class="fe fe-trash"></i> Lixeira</a>
                 </li>
               </ul>
             </div>

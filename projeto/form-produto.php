@@ -114,19 +114,19 @@ $qtdestoque = isset($_GET['qtdestoque']) ? $_GET['qtdestoque'] : '';
                     <div class="col-md-12">
                       <div class="form-group">
                         <label class="form-label">Descrição</label>
-                        <input type="text" class="form-control" name="descricao" placeholder="Arroz..">
+                        <input type="text" class="form-control" name="descricao" placeholder="Arroz.." required>
                       </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                       <div class="form-group">
                         <label class="form-label">Estoque</label>
-                        <input type="number" class="form-control" name="qtdestoque" placeholder="10..">
+                        <input type="number" class="form-control" name="qtdestoque" placeholder="10.." required>
                       </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                       <div class="form-group">
                         <label class="form-label">Código de barras</label>
-                        <input type="number" class="form-control" name="codbarras" placeholder="78978978978978">
+                        <input type="number" class="form-control" name="codbarras" placeholder="78978978978978" required>
                       </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
@@ -136,7 +136,7 @@ $qtdestoque = isset($_GET['qtdestoque']) ? $_GET['qtdestoque'] : '';
                           <span class="input-group-prepend">
                             <span class="input-group-text">R$</span>
                           </span>
-                          <input type="text" class="form-control text-right" name="vlrunt" aria-label="Valor">
+                          <input type="text" class="form-control text-right" name="vlrunt" aria-label="Valor" required>
                         </div>
                       </div>
                     </div>

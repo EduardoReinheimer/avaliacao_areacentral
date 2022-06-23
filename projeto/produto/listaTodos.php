@@ -16,7 +16,7 @@ function listAllProdutosExcluidos(){
 
     $produtos = [];
     $obj = new Produto();
-    $produtos = $obj->listAll();
+    $produtos = $obj->listAllLixeira();
     if(count($produtos) < 1){
         $produtos = [];
     }

@@ -49,7 +49,7 @@ $produtos = isset($list_produtos) ? $list_produtos : [];
       <div class="header py-4">
         <div class="container">
           <div class="d-flex">
-            <a class="header-brand" href="./index.html">
+            <a class="header-brand" href="./index.php">
               <img src="./demo/brand/tabler.svg" class="header-brand-img" alt="tabler logo">
             </a>
             <div class="d-flex order-lg-2 ml-auto">
@@ -83,16 +83,16 @@ $produtos = isset($list_produtos) ? $list_produtos : [];
             <div class="col-lg order-lg-first">
               <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
                 <li class="nav-item">
-                  <a href="./index.html" class="nav-link"><i class="fe fe-home"></i> Home</a>
+                  <a href="./index.php" class="nav-link"><i class="fe fe-home"></i> Home</a>
                 </li>
                 <li class="nav-item">
-                  <a href="./produtos.html" class="nav-link"><i class="fe fe-package"></i> Produtos</a>
+                  <a href="./produtos.php" class="nav-link"><i class="fe fe-package"></i> Produtos</a>
                 </li>
                 <li class="nav-item">
-                  <a href="./form-venda.html" class="nav-link"><i class="fe fe-dollar-sign"></i> Venda</a>
+                  <a href="./form-venda.php" class="nav-link"><i class="fe fe-dollar-sign"></i> Venda</a>
                 </li>
                 <li class="nav-item">
-                  <a href="./produtos-excluidos.html" class="nav-link active"><i class="fe fe-trash"></i> Lixeira</a>
+                  <a href="./produtos-excluidos.php" class="nav-link active"><i class="fe fe-trash"></i> Lixeira</a>
                 </li>
               </ul>
             </div>
@@ -131,56 +131,17 @@ $produtos = isset($list_produtos) ? $list_produtos : [];
                               </td>
                               <td>
                                 ' . $produto->getQuantidadeEstoque() . '
-                              </td>
-                              <td>
-                               ' . "data" . '
-                              </td>
-                              <td>
-                                ' . "total vendas" . '
-                              </td>                         
-                              <td>
-                              <a class="icon" href="#">
-                               <i class="fe fe-refresh-ccw"></i>
-                              </a>		    
+                              </td>                        
+                              <td>	    
                               </td>
                               <td>
                                 <a class="icon" href="./produto/restaura.php?id=' . $produto->getId() . '">
-                                  <i class="fe fe-trash"></i>
+                                  <i class="fe fe-refresh-ccw"></i>
                                 </a>			    
                               </td>
                             </tr>';
                       }
                       ?>
-                      <tr>
-                        <td><span class="text-muted">1</span></td>
-                        <td>Batata rosa</td>
-                        <td>
-                          R$ 1,50
-                        </td>
-                        <td>
-                          2000
-                        </td>
-                        <td>
-                          <a class="icon" href="#">
-                            <i class="fe fe-refresh-ccw"></i>
-                          </a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td><span class="text-muted">2</span></td>
-                        <td>Farinha</td>
-                        <td>
-                          R$ 7,50
-                        </td>
-                        <td>
-                          200
-                        </td>
-                        <td>
-                          <a class="icon" href="#">
-                            <i class="fe fe-refresh-ccw"></i>
-                          </a>
-                        </td>
-                      </tr>
                     </tbody>
                   </table>
                 </div>

@@ -115,19 +115,19 @@ $produto->getById($id);
                       <div class="form-group">
                         <label class="form-label">Descrição</label>
                         <input type="hidden" class="form-control" name="id" value="<?php echo $produto->getId()?>">
-                        <input type="text" class="form-control" name="descricao"placeholder="Arroz.." value="<?php echo $produto->getDescricao()?>">
+                        <input type="text" class="form-control" name="descricao"placeholder="Arroz.." value="<?php echo $produto->getDescricao()?>" required>
                       </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                       <div class="form-group">
                         <label class="form-label">Estoque</label>
-                        <input type="number" class="form-control" placeholder="10.." name="qtdestoque" value="<?php echo $produto->getQuantidadeEstoque()?>">
+                        <input type="number" class="form-control" placeholder="10.." name="qtdestoque" value="<?php echo $produto->getQuantidadeEstoque()?>" required>
                       </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                       <div class="form-group">
                         <label class="form-label">Código de barras</label>
-                        <input type="number" class="form-control" name="codbarras" value="<?php echo $produto->getCodigoBarras()?>">
+                        <input type="number" class="form-control" name="codbarras" value="<?php echo $produto->getCodigoBarras()?>" required>
                       </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
@@ -137,7 +137,7 @@ $produto->getById($id);
                           <span class="input-group-prepend">
                             <span class="input-group-text">R$</span>
                           </span>
-                          <input type="text" name="vlrunt" class="form-control text-right" aria-label="Valor" value="<?php echo $produto->getValorUnitario()?>">
+                          <input type="text" name="vlrunt" class="form-control text-right" aria-label="Valor" value="<?php echo $produto->getValorUnitario()?>" required>
                         </div>
                       </div>
                     </div>

@@ -58,7 +58,7 @@
         <div class="header py-4">
           <div class="container">
             <div class="d-flex">
-              <a class="header-brand" href="./index.html">
+              <a class="header-brand" href="./index.php">
                 <img
                   src="./demo/brand/tabler.svg"
                   class="header-brand-img"
@@ -125,12 +125,12 @@
                     >
                   </li>
                   <li class="nav-item">
-                    <a href="./form-venda.html" class="nav-link"
+                    <a href="./form-venda.php" class="nav-link"
                       ><i class="fe fe-dollar-sign"></i> Venda</a
                     >
                   </li>
                   <li class="nav-item">
-                    <a href="./produtos-excluidos.html" class="nav-link"
+                    <a href="./produtos-excluidos.php" class="nav-link"
                       ><i class="fe fe-trash"></i> Lixeira</a
                     >
                   </li>
