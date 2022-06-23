@@ -137,7 +137,7 @@ $produto->getById($id);
                           <span class="input-group-prepend">
                             <span class="input-group-text">R$</span>
                           </span>
-                          <input type="text" name="vlrunt" class="form-control text-right" aria-label="Valor" value="<?php echo $produto->getValorUnitario()?>" required>
+                          <input type="number" name="vlrunt" min=0.01 step=0.01 class="form-control text-right" aria-label="Valor" value="<?php echo $produto->getValorUnitario()?>" required>
                         </div>
                       </div>
                     </div>

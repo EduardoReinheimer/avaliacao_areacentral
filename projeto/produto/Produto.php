@@ -24,7 +24,7 @@ class Produto
 
     public function getId()
     {
-        return $this->id;
+        return (int) $this->id;
     }
 
     private function setId($id)
@@ -44,7 +44,7 @@ class Produto
 
     public function getValorUnitario()
     {
-        return $this->vlrunt;
+        return (float)$this->vlrunt;
     }
 
     public function setValorUnitario($vlrunt)
@@ -54,7 +54,7 @@ class Produto
 
     public function getQuantidadeEstoque()
     {
-        return $this->qtdestoque;
+        return (int) $this->qtdestoque;
     }
 
     private function setQuantidadeEstoque($qtdestoque)
@@ -82,19 +82,23 @@ class Produto
         $this->ativo = $ativo == 'S' ? 'S' : 'N';
     }
 
-    public function getDataVenda(){
-        return isset($this->data_venda)? $this->data_venda: "Sem vendas";
+    public function getDataVenda()
+    {
+        return isset($this->data_venda) ? $this->data_venda : "00/00/0000";
     }
 
-    private function setDataVenda($data_venda){
+    private function setDataVenda($data_venda)
+    {
         $this->data_venda = $data_venda;
     }
 
-    public function getTotalVendas(){
+    public function getTotalVendas()
+    {
         return isset($this->total_vendas) ? $this->total_vendas : 0;
     }
 
-    private function setTotalVendas($total_vendas){
+    private function setTotalVendas($total_vendas)
+    {
         $this->total_vendas = $total_vendas;
     }
 

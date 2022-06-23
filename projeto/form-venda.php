@@ -129,7 +129,7 @@ $vendas = $venda->listAll();
                     <div class="col-sm-6 col-md-4">
                       <div class="form-group">
                         <label class="form-label">Quantidade</label>
-                        <input type="number" name="quantidade" class="form-control" placeholder="Digite aqui a quantidade" required>
+                        <input type="number" id="quantidade" name="quantidade" min=1 class="form-control t" placeholder="Digite aqui a quantidade" required>
                       </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
@@ -139,8 +139,7 @@ $vendas = $venda->listAll();
                           <span class="input-group-prepend">
                             <span class="input-group-text">R$</span>
                           </span>
-                          <input type="text" name="vlrunt" id="vlrunt" class="form-control text-right" aria-label="Valor" value="
-                          <?php echo (isset($_GET['produto'])) ? $_GET['produto'] : 0; ?>">
+                          <input type="number" id="vlrunt" name="vlrunt" min=0.01 step=0.01 id="vlrunt" class="form-control text-right t" aria-label="Valor" value="" required>
                         </div>
                       </div>
                     </div>
@@ -151,7 +150,7 @@ $vendas = $venda->listAll();
                           <span class="input-group-prepend">
                             <span class="input-group-text">R$</span>
                           </span>
-                          <input type="text" name="valortotal" class="form-control text-right" aria-label="Valor" disabled="disabled" title="Este campo não pode ser alterado">
+                          <input type="text" id="valortotal" name="valortotal" class="form-control text-right" aria-label="Valor" disabled="disabled" title="Este campo não pode ser alterado">
                         </div>
                       </div>
                     </div>
@@ -170,7 +169,7 @@ $vendas = $venda->listAll();
                 </div>
                 <div class="card-footer text-left" style="display: flex; justify-content: space-between">
                   <div>
-                    <a href="./produtos.html" class="btn btn-secondary">Voltar para produtos</a>
+                    <a href="./produtos.php" class="btn btn-secondary">Voltar para produtos</a>
                   </div>
                   <div>
                     <button type="submit" class="btn btn-primary">Confirmar</button>
@@ -237,14 +236,51 @@ $vendas = $venda->listAll();
   document.getElementById('produto').addEventListener('change', function() {
     if (this.value !== null) {
       console.log(this.value);
-      document.cookie = "produto_id=" + this.value;
-      var s = document.getElementById('vlrunt');
-      s.value = <?php
-                echo (isset($_GET['produto'])) ? $_GET['produto'] : 0;
-                ?>;
+      var s = JSON.parse(<?php echo getListSerialized($produtos); ?>);
     }
 
-  });
+  })
+
+  let inputs = document.querySelectorAll("input.t");
+  inputs.forEach(input => {
+    input.addEventListener("change", () => {
+      setvalorTotal();
+    });
+
+    function setvalorTotal(){
+      let a = document.getElementById('quantidade').value;
+      let b = document.getElementById('vlrunt').value;
+      let total = a * b;
+      document.getElementById('valortotal').value = total; 
+    }
+  })
 </script>
+<?php
+/**
+ * Retorna a lista de materiais para poder passar ao JS
+ */
+function getListSerialized($produtos)
+{
+  $serializadList = "[";
+  foreach ($produtos as $produto) {
+    $obj = new stdClass();
+    $obj->id = $produto->getId();
+    $obj->desc = $produto->getDescricao();
+    $obj->vlrunt = $produto->getValorUnitario();
+    $obj->qtdestoque = $produto->getQuantidadeEstoque();
+    $obj->codbarras = $produto->getCodigoBarras();
+    $obj->ativo = $produto->getProdutoAtivo();
+    $obj->data_venda = $produto->getDataVenda();
+    $obj->total_vendas = $produto->getTotalVendas();
+    $ser = json_encode($obj, true);
+    $serializadList = $serializadList . $ser . ",";
+  }
+  if (substr($serializadList, -1) == ",") {
+    $serializadList = rtrim($serializadList, ",");
+  }
+  $serializadList = $serializadList . "]";
+  return $serializadList;
+}
+?>;
 
 </html>
