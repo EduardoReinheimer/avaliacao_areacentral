@@ -120,7 +120,6 @@ $produtos = isset($list_produtos) ? $list_produtos : [];
                     </thead>
                     <tbody>
                       <?php
-                      $index = 0;
                       foreach ($produtos as $produto) {
                         echo '<td><span class="text-muted">' . $produto->getId() . '</span></td>
                               <td>

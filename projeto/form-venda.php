@@ -5,7 +5,10 @@ require_once '../projeto/produto/Produto.php';
 
 $list_produtos = listAllProdutos();
 $produtos = isset($list_produtos) ? $list_produtos : [];
+
 $venda = new Venda();
+$vendas = $venda->listAll();
+
 ?>
 <!doctype html>
 <html lang="en" dir="ltr">
@@ -126,7 +129,7 @@ $venda = new Venda();
                     <div class="col-sm-6 col-md-4">
                       <div class="form-group">
                         <label class="form-label">Quantidade</label>
-                        <input type="number" name="quantidade" class="form-control" placeholder="Digite aqui a quantidade">
+                        <input type="number" name="quantidade" class="form-control" placeholder="Digite aqui a quantidade" required>
                       </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
@@ -137,7 +140,7 @@ $venda = new Venda();
                             <span class="input-group-text">R$</span>
                           </span>
                           <input type="text" name="vlrunt" id="vlrunt" class="form-control text-right" aria-label="Valor" value="
-                          <?php  echo (isset($_GET['produto']))?$_GET['produto']: 0; ?>">
+                          <?php echo (isset($_GET['produto'])) ? $_GET['produto'] : 0; ?>">
                         </div>
                       </div>
                     </div>
@@ -198,32 +201,27 @@ $venda = new Venda();
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td><span class="text-muted">2</span></td>
-                        <td>Batata</td>
-                        <td>
-                          2
-                        </td>
-                        <td>
-                          R$ 1,50
-                        </td>
-                        <td>
-                          R$ 3,00
-                        </td>
-                      </tr>
-                      <tr>
-                        <td><span class="text-muted">1</span></td>
-                        <td>Batata</td>
-                        <td>
-                          10
-                        </td>
-                        <td>
-                          R$ 1,50
-                        </td>
-                        <td>
-                          R$ 15,00
-                        </td>
-                      </tr>
+                      <?php
+                      $index = 0;
+                      foreach ($vendas as $venda) {
+                        echo '<td><span class="text-muted">' . $venda->getId() . '</span></td>
+                              <td>
+                                ' . $venda->getDescricaoProduto() . '
+                              </td>
+                              <td>
+                                ' . $venda->getQuantidade() . '
+                              </td>
+                              <td>
+                                R$' . $venda->getValorUnitario() . '
+                              </td>
+                              <td>
+                                R$' . $venda->getValorTotal() . '
+                              </td>                        
+                              <td>	    
+                              </td>
+                            </tr>';
+                      }
+                      ?>
                     </tbody>
                   </table>
                 </div>
@@ -237,15 +235,15 @@ $venda = new Venda();
 </body>
 <script>
   document.getElementById('produto').addEventListener('change', function() {
-    if(this.value !== null){
+    if (this.value !== null) {
       console.log(this.value);
       document.cookie = "produto_id=" + this.value;
       var s = document.getElementById('vlrunt');
-      s.value  = <?php
-        echo (isset($_GET['produto']))?$_GET['produto']: 0;
-      ?>;
+      s.value = <?php
+                echo (isset($_GET['produto'])) ? $_GET['produto'] : 0;
+                ?>;
     }
-    
+
   });
 </script>
 

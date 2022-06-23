@@ -5,6 +5,8 @@ require_once '../projeto/produto/Produto.php';
 class Venda {
     private $id;
     private $produto_id;
+    private $produto_descricao;
+    private $total;
     private $quantidade;
     private $valor_unitario;
 
@@ -28,6 +30,22 @@ class Venda {
 
     private function setProdutoId($produto_id){
         $this->produto_id = $produto_id;
+    }
+
+    public function getDescricaoProduto(){
+        return $this->produto_descricao;
+    }
+
+    private function setDescricaoProduto($produto_descricao){
+        $this->produto_descricao = $produto_descricao;
+    }
+
+    public function getValorTotal(){
+        return $this->total;
+    }
+
+    private function setValorTotal($total){
+        $this->total = $total;
     }
 
     public function getQuantidade(){
@@ -71,6 +89,44 @@ class Venda {
         }
         $conn->closeConexao();
         return $qtd_ativos;
+    }
+
+    /***
+     * Retorna uma lista com todas as ocorrências ativas
+     */
+    public function listAll()
+    {
+        $conn = new Conexao();
+        $conn->setConexao();
+
+        $conn->query("SELECT
+                    v.ven_id,
+                    p.pro_id,
+                    p.pro_desc,
+                    v.ven_qtd,
+                    p.pro_vlrunt,
+                    (v.ven_qtd * p.pro_vlrunt) as total
+        FROM venda v
+        join produto p on 
+            p.pro_id = v.pro_id
+        WHERE p.pro_ativo = 'S'");
+
+        $retorno = [];
+
+        if ($conn->getQuery()) {
+            foreach ($conn->getArrayResults() as $linha) {
+                $venda = new Venda();
+                $venda->setId($linha['ven_id']);
+                $venda->setProdutoId($linha['pro_id']);
+                $venda->setDescricaoProduto($linha['pro_desc']);
+                $venda->setValorUnitario($linha['pro_vlrunt']);
+                $venda->setQuantidade($linha['ven_qtd']);
+                $venda->setValorTotal($linha['total']);
+                $retorno[] = $venda;
+            }
+        }
+        $conn->closeConexao();
+        return $retorno;
     }
 
 }
