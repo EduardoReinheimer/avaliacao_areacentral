@@ -1,11 +1,7 @@
 <?php
 require_once '../projeto/produto/listaTodos.php';
-require_once '../projeto/venda/Venda.php';
-require_once '../projeto/produto/Produto.php';
-
-$list_produtos = listAllProdutos();
+$list_produtos = listAllProdutosExcluidos();
 $produtos = isset($list_produtos) ? $list_produtos : [];
-$venda = new Venda();
 ?>
 <!doctype html>
 <html lang="en" dir="ltr">
@@ -25,7 +21,7 @@ $venda = new Venda();
   <link rel="icon" href="./favicon.ico" type="image/x-icon" />
   <link rel="shortcut icon" type="image/x-icon" href="./favicon.ico" />
   <!-- Generated: 2018-04-16 09:29:05 +0200 -->
-  <title>Venda</title>
+  <title>Produtos</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
   <script src="./assets/js/require.min.js"></script>
@@ -93,87 +89,12 @@ $venda = new Venda();
                   <a href="./produtos.html" class="nav-link"><i class="fe fe-package"></i> Produtos</a>
                 </li>
                 <li class="nav-item">
-                  <a href="./form-produto.html" class="nav-link active"><i class="fe fe-dollar-sign"></i> Venda</a>
+                  <a href="./form-venda.html" class="nav-link"><i class="fe fe-dollar-sign"></i> Venda</a>
                 </li>
                 <li class="nav-item">
-                  <a href="./produtos-excluidos.html" class="nav-link"><i class="fe fe-trash"></i> Lixeira</a>
+                  <a href="./produtos-excluidos.html" class="nav-link active"><i class="fe fe-trash"></i> Lixeira</a>
                 </li>
               </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="my-3 my-md-5">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-12">
-              <form class="card" method="post" action="venda\insere.php">
-                <div class="card-body">
-                  <h3 class="card-title">Realizar venda de um produto</h3>
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label class="form-label">Produto</label>
-                        <select class="form-control custom-select" name="produto" id="produto">
-                          <?php
-                          foreach ($produtos as $produto) {
-                            echo '<option value="' . $produto->getId() . '">' . $produto->getDescricao() . '</option>';
-                          }
-                          ?>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4">
-                      <div class="form-group">
-                        <label class="form-label">Quantidade</label>
-                        <input type="number" name="quantidade" class="form-control" placeholder="Digite aqui a quantidade">
-                      </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4">
-                      <div class="form-group">
-                        <label class="form-label">Valor unitário</label>
-                        <div class="input-group">
-                          <span class="input-group-prepend">
-                            <span class="input-group-text">R$</span>
-                          </span>
-                          <input type="text" name="vlrunt" id="vlrunt" class="form-control text-right" aria-label="Valor" value="
-                          <?php  echo (isset($_GET['produto']))?$_GET['produto']: 0; ?>">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4">
-                      <div class="form-group">
-                        <label class="form-label">Valor total</label>
-                        <div class="input-group">
-                          <span class="input-group-prepend">
-                            <span class="input-group-text">R$</span>
-                          </span>
-                          <input type="text" name="valortotal" class="form-control text-right" aria-label="Valor" disabled="disabled" title="Este campo não pode ser alterado">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-sm-6 col-md-12">
-                      <div class="form-group">
-                        <div class="form-label">&nbsp;</div>
-                        <div class="custom-controls-stacked">
-                          <label class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" name="atualiza" checked>
-                            <span class="custom-control-label">Atualizar valor unitário do produto</span>
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="card-footer text-left" style="display: flex; justify-content: space-between">
-                  <div>
-                    <a href="./produtos.html" class="btn btn-secondary">Voltar para produtos</a>
-                  </div>
-                  <div>
-                    <button type="submit" class="btn btn-primary">Confirmar</button>
-                  </div>
-                </div>
-              </form>
             </div>
           </div>
         </div>
@@ -184,44 +105,80 @@ $venda = new Venda();
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">Últimas vendas realizadas</h3>
+                  <h3 class="card-title">Produtos excluídos</h3>
                 </div>
                 <div class="table-responsive">
                   <table class="table card-table table-vcenter text-nowrap">
                     <thead>
                       <tr>
                         <th class="w-1">#</th>
-                        <th>Produto</th>
-                        <th>Quantidade</th>
+                        <th>Descrição</th>
                         <th>Valor unitário</th>
-                        <th>Valor total da venda</th>
+                        <th>Estoque</th>
+                        <th class="w-1"></th>
                       </tr>
                     </thead>
                     <tbody>
+                      <?php
+                      $index = 0;
+                      foreach ($produtos as $produto) {
+                        echo '<td><span class="text-muted">' . $produto->getId() . '</span></td>
+                              <td>
+                                ' . $produto->getDescricao() . '
+                              </td>
+                              <td>
+                                R$' . $produto->getValorUnitario() . '
+                              </td>
+                              <td>
+                                ' . $produto->getQuantidadeEstoque() . '
+                              </td>
+                              <td>
+                               ' . "data" . '
+                              </td>
+                              <td>
+                                ' . "total vendas" . '
+                              </td>                         
+                              <td>
+                              <a class="icon" href="#">
+                               <i class="fe fe-refresh-ccw"></i>
+                              </a>		    
+                              </td>
+                              <td>
+                                <a class="icon" href="./produto/restaura.php?id=' . $produto->getId() . '">
+                                  <i class="fe fe-trash"></i>
+                                </a>			    
+                              </td>
+                            </tr>';
+                      }
+                      ?>
                       <tr>
-                        <td><span class="text-muted">2</span></td>
-                        <td>Batata</td>
-                        <td>
-                          2
-                        </td>
+                        <td><span class="text-muted">1</span></td>
+                        <td>Batata rosa</td>
                         <td>
                           R$ 1,50
                         </td>
                         <td>
-                          R$ 3,00
+                          2000
+                        </td>
+                        <td>
+                          <a class="icon" href="#">
+                            <i class="fe fe-refresh-ccw"></i>
+                          </a>
                         </td>
                       </tr>
                       <tr>
-                        <td><span class="text-muted">1</span></td>
-                        <td>Batata</td>
+                        <td><span class="text-muted">2</span></td>
+                        <td>Farinha</td>
                         <td>
-                          10
+                          R$ 7,50
                         </td>
                         <td>
-                          R$ 1,50
+                          200
                         </td>
                         <td>
-                          R$ 15,00
+                          <a class="icon" href="#">
+                            <i class="fe fe-refresh-ccw"></i>
+                          </a>
                         </td>
                       </tr>
                     </tbody>
@@ -235,18 +192,5 @@ $venda = new Venda();
     </div>
   </div>
 </body>
-<script>
-  document.getElementById('produto').addEventListener('change', function() {
-    if(this.value !== null){
-      console.log(this.value);
-      document.cookie = "produto_id=" + this.value;
-      var s = document.getElementById('vlrunt');
-      s.value  = <?php
-        echo (isset($_GET['produto']))?$_GET['produto']: 0;
-      ?>;
-    }
-    
-  });
-</script>
 
 </html>

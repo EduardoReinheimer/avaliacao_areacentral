@@ -135,12 +135,14 @@ class Produto
 
         if ($conn->getQuery()) {
             $linha = $conn->getArrayResults();
-            $this->setId($linha[0]['pro_id']);
-            $this->setDescricao($linha[0]['pro_desc']);
-            $this->setValorUnitario($linha[0]['pro_vlrunt']);
-            $this->setQuantidadeEstoque($linha[0]['pro_qtdestoque']);
-            $this->setCodigoBarras($linha[0]['pro_codbarras']);
-            $this->setProdutoAtivo($linha[0]['pro_ativo']);
+            if (isset($linha[0]['pro_id'])) {
+                $this->setId($linha[0]['pro_id']);
+                $this->setDescricao($linha[0]['pro_desc']);
+                $this->setValorUnitario($linha[0]['pro_vlrunt']);
+                $this->setQuantidadeEstoque($linha[0]['pro_qtdestoque']);
+                $this->setCodigoBarras($linha[0]['pro_codbarras']);
+                $this->setProdutoAtivo($linha[0]['pro_ativo']);
+            }
         }
         $conn->closeConexao();
     }

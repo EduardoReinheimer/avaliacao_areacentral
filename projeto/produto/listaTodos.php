@@ -11,3 +11,14 @@ function listAllProdutos(){
     }
     return $produtos;
 }
+
+function listAllProdutosExcluidos(){
+
+    $produtos = [];
+    $obj = new Produto();
+    $produtos = $obj->listAll();
+    if(count($produtos) < 1){
+        $produtos = [];
+    }
+    return $produtos;
+}

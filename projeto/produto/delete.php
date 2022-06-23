@@ -7,5 +7,7 @@ $id = $_GET['id'];
 $conn = new Conexao();
 $conn->setConexao();
 
-$conn->query("DELETE FROM `produto` WHERE `pro_id`=$id");
+$conn->query("UPDATE `produto` SET 
+`pro_ativo`='N'
+WHERE `pro_id`=$id");
 $conn->closeConexao();
