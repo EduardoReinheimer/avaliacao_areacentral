@@ -181,4 +181,23 @@ class Produto
         }
         $conn->closeConexao();
     }
+
+    /***
+     * Retorna a quantidade de produtos ativos
+     */
+    public function countAtivos()
+    {
+        $conn = new Conexao();
+        $conn->setConexao();
+
+        $conn->query("SELECT COUNT(*) as qtd_ativos FROM produto p WHERE p.pro_ativo = 'S'");
+
+        $qtd_ativos = 0;
+        if ($conn->getQuery()) {
+            $linha = $conn->getArrayResults();
+            $qtd_ativos =  $linha[0]['qtd_ativos'];
+        }
+        $conn->closeConexao();
+        return $qtd_ativos;
+    }
 }
