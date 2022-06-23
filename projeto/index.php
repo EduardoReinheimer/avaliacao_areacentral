@@ -1,5 +1,6 @@
 <?php
 require_once '../projeto/produto/Produto.php';
+require_once '../projeto/venda/Venda.php';
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -123,7 +124,13 @@ require_once '../projeto/produto/Produto.php';
             <div class="col-6 col-sm-4 col-lg-2">
               <div class="card">
                 <div class="card-body p-3 text-center">
-                  <div class="h1 m-0">1</div>
+                  <div class="h1 m-0">
+                  <span><?php
+                          $venda = new Venda();
+                          echo $venda->count();
+                          ?>
+                    </span>
+                  </div>
                   <div class="text-muted mb-4">Venda</div>
                 </div>
               </div>

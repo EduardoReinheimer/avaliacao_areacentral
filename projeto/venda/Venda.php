@@ -55,4 +55,22 @@ class Venda {
         return $produto;
     }
 
+    /**
+     * Retorna a quantidade de vendas
+     */
+    public function count(){
+        $conn = new Conexao();
+        $conn->setConexao();
+
+        $conn->query("SELECT COUNT(*) as qtd_ativos FROM venda");
+
+        $qtd_ativos = 0;
+        if ($conn->getQuery()) {
+            $linha = $conn->getArrayResults();
+            $qtd_ativos =  $linha[0]['qtd_ativos'];
+        }
+        $conn->closeConexao();
+        return $qtd_ativos;
+    }
+
 }
