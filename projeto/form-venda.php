@@ -117,7 +117,8 @@ $vendas = $venda->listAll();
                     <div class="col-md-12">
                       <div class="form-group">
                         <label class="form-label">Produto</label>
-                        <select class="form-control custom-select" name="produto" id="produto">
+                        <select class="form-control custom-select" name="produto" id="produto" required>
+                        <option disabled selected value> Selecione uma opção </option>
                           <?php
                           foreach ($produtos as $produto) {
                             echo '<option value="' . $produto->getId() . '">' . $produto->getDescricao() . '</option>';
@@ -129,7 +130,7 @@ $vendas = $venda->listAll();
                     <div class="col-sm-6 col-md-4">
                       <div class="form-group">
                         <label class="form-label">Quantidade</label>
-                        <input type="number" id="quantidade" name="quantidade" min=1 class="form-control t" placeholder="Digite aqui a quantidade" required>
+                        <input type="number" id="quantidade" name="quantidade" min=1 class="form-control qtd" placeholder="Digite aqui a quantidade" required>
                       </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
@@ -139,7 +140,7 @@ $vendas = $venda->listAll();
                           <span class="input-group-prepend">
                             <span class="input-group-text">R$</span>
                           </span>
-                          <input type="number" id="vlrunt" name="vlrunt" min=0.01 step=0.01 id="vlrunt" class="form-control text-right t" aria-label="Valor" value="" required>
+                          <input type="number" id="vlrunt" name="vlrunt" min=0.01 step=0.01 id="vlrunt" class="form-control text-right qtd" aria-label="Valor" value="" required>
                         </div>
                       </div>
                     </div>
@@ -235,24 +236,41 @@ $vendas = $venda->listAll();
 <script>
   document.getElementById('produto').addEventListener('change', function() {
     if (this.value !== null) {
-      console.log(this.value);
-      var s = JSON.parse(<?php echo getListSerialized($produtos); ?>);
+      let id = parseInt(this.value) ;
+      let serialized_lista_produtos = <?php echo getListSerialized($produtos); ?>;
+      let produto = serialized_lista_produtos.filter(prod => {
+        return prod.id === id;
+      });
+
+      //Pega os dois campos
+      let fieldQuantidade = document.getElementById('quantidade');
+      let fieldValorUnitario = document.getElementById('vlrunt');
+
+      //Seta o valor unitário padrão ao campo
+      fieldValorUnitario.value = produto[0].vlrunt;
+
+      //Limita a quantidade máxima a ser vendida no campo de quantidade 
+      fieldQuantidade.setAttribute('max', produto[0].qtdestoque)
+      fieldQuantidade.value = produto[0].qtdestoque;
     }
 
   })
 
-  let inputs = document.querySelectorAll("input.t");
+  //Pega os inputs com a classe e inicia o delegate para os campos
+  let inputs = document.querySelectorAll("input.qtd");
   inputs.forEach(input => {
     input.addEventListener("change", () => {
       setvalorTotal();
     });
 
-    function setvalorTotal(){
-      let a = document.getElementById('quantidade').value;
-      let b = document.getElementById('vlrunt').value;
-      let total = a * b;
-      document.getElementById('valortotal').value = total; 
+    //Pega valor dos dois campos e multiplica formando o valor total
+    function setvalorTotal() {
+      let valueQuantidade = document.getElementById('quantidade').value;
+      let valueValorUnitario = document.getElementById('vlrunt').value;
+      let total = valueQuantidade * valueValorUnitario;
+      document.getElementById('valortotal').value = total;
     }
+
   })
 </script>
 <?php
