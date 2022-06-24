@@ -12,11 +12,11 @@ function listAllProdutos($termobusca = null){
     return $produtos;
 }
 
-function listAllProdutosExcluidos(){
+function listAllProdutosExcluidos($termobusca = null){
 
     $produtos = [];
     $obj = new Produto();
-    $produtos = $obj->listAllLixeira();
+    $produtos = is_null($termobusca) ? $obj->listAllLixeira() : $obj->listAllLixeiraBySearchTerm($termobusca);
     if(count($produtos) < 1){
         $produtos = [];
     }

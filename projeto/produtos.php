@@ -180,8 +180,6 @@ $produtos = isset($list_produtos) ? $list_produtos : [];
     const Http = new XMLHttpRequest();
     const url = "<?php echo $_SERVER["PHP_SELF"]; ?>" + `?termobusca=${campoBusca.value}`;
     window.location.href = url;
-    // Http.open("GET", url, true);
-    // Http.send();
   }
 </script>
 

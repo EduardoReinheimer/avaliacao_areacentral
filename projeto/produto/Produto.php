@@ -165,10 +165,10 @@ class Produto
         FROM produto p
         LEFT JOIN venda v on
             p.pro_id = v.pro_id
-            where p.pro_ativo = 'S' and
+            where p.pro_ativo = 'S' and (
             p.pro_desc like '%$searchterm%' or
             p.pro_id = '$searchterm'
-         GROUP BY p.pro_id");
+         GROUP BY p.pro_id);");
 
         $retorno = [];
 
@@ -206,6 +206,43 @@ class Produto
                     p.pro_codbarras,
                     p.pro_ativo
         FROM produto p WHERE p.pro_ativo = 'N'");
+
+        $retorno = [];
+
+        if ($conn->getQuery()) {
+            foreach ($conn->getArrayResults() as $linha) {
+                $produto = new Produto();
+                $produto->setId($linha['pro_id']);
+                $produto->setDescricao($linha['pro_desc']);
+                $produto->setValorUnitario($linha['pro_vlrunt']);
+                $produto->setQuantidadeEstoque($linha['pro_qtdestoque']);
+                $produto->setCodigoBarras($linha['pro_codbarras']);
+                $produto->setProdutoAtivo($linha['pro_ativo']);
+                $retorno[] = $produto;
+            }
+        }
+        $conn->closeConexao();
+        return $retorno;
+    }
+
+    /***
+     * Retorna uma lista com todas as ocorrências na lixeira por termo de busca
+     */
+    public function listAllLixeiraBySearchTerm($searchterm)
+    {
+        $conn = new Conexao();
+        $conn->setConexao();
+
+        $conn->query("SELECT 
+                    p.pro_id,
+                    p.pro_desc,
+                    p.pro_vlrunt,
+                    p.pro_qtdestoque,
+                    p.pro_codbarras,
+                    p.pro_ativo
+        FROM produto p WHERE p.pro_ativo = 'N' and
+            (p.pro_desc like '%$searchterm%' or
+            p.pro_id = '$searchterm')");
 
         $retorno = [];
 
