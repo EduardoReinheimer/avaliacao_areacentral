@@ -1,6 +1,9 @@
 <?php
 require_once '../projeto/produto/listaTodos.php';
-$list_produtos = listAllProdutos();
+
+$termobusca = isset($_GET['termobusca']) ? $_GET['termobusca']: null;
+
+$list_produtos = listAllProdutos($termobusca);
 $produtos = isset($list_produtos) ? $list_produtos : [];
 ?>
 
@@ -75,8 +78,8 @@ $produtos = isset($list_produtos) ? $list_produtos : [];
           <div class="row align-items-center">
             <div class="col-lg-3 ml-auto">
               <form class="input-icon my-3 my-lg-0">
-                <input type="search" class="form-control header-search" placeholder="Search&hellip;" tabindex="1">
-                <div class="input-icon-addon">
+                <input type="search" class="form-control header-search" placeholder="Search&hellip;" tabindex="1" onblur="aplicaFiltroBusca()" id="campo_busca">
+                <div class="input-icon-addon" id="botao_lupa">
                   <i class="fe fe-search"></i>
                 </div>
               </form>
@@ -170,5 +173,16 @@ $produtos = isset($list_produtos) ? $list_produtos : [];
     </div>
   </div>
 </body>
+<script>
+  function aplicaFiltroBusca() {
+    let campoBusca = document.getElementById('campo_busca');
+
+    const Http = new XMLHttpRequest();
+    const url = "<?php echo $_SERVER["PHP_SELF"]; ?>" + `?termobusca=${campoBusca.value}`;
+    window.location.href = url;
+    // Http.open("GET", url, true);
+    // Http.send();
+  }
+</script>
 
 </html>

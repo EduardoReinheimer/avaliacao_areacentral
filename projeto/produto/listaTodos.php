@@ -1,11 +1,11 @@
 <?php 
 require_once '../projeto/produto/Produto.php';
 
-function listAllProdutos(){
+function listAllProdutos($termobusca = null){
 
     $produtos = [];
     $obj = new Produto();
-    $produtos = $obj->listAll();
+    $produtos = is_null($termobusca) ? $obj->listAll() : $obj->listAllBySearchTerm($termobusca);
     if(count($produtos) < 1){
         $produtos = [];
     }

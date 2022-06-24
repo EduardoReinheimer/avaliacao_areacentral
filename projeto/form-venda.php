@@ -118,7 +118,7 @@ $vendas = $venda->listAll();
                       <div class="form-group">
                         <label class="form-label">Produto</label>
                         <select class="form-control custom-select" name="produto" id="produto" required>
-                        <option disabled selected value> Selecione uma opção </option>
+                          <option disabled selected value> Selecione uma opção </option>
                           <?php
                           foreach ($produtos as $produto) {
                             echo '<option value="' . $produto->getId() . '">' . $produto->getDescricao() . '</option>';
@@ -236,7 +236,7 @@ $vendas = $venda->listAll();
 <script>
   document.getElementById('produto').addEventListener('change', function() {
     if (this.value !== null) {
-      let id = parseInt(this.value) ;
+      let id = parseInt(this.value);
       let serialized_lista_produtos = <?php echo getListSerialized($produtos); ?>;
       let produto = serialized_lista_produtos.filter(prod => {
         return prod.id === id;
