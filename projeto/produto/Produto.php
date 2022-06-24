@@ -167,8 +167,8 @@ class Produto
             p.pro_id = v.pro_id
             where p.pro_ativo = 'S' and (
             p.pro_desc like '%$searchterm%' or
-            p.pro_id = '$searchterm'
-         GROUP BY p.pro_id);");
+            p.pro_id = '$searchterm')
+         GROUP BY p.pro_id;");
 
         $retorno = [];
 
